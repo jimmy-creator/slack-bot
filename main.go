@@ -29,11 +29,15 @@ func main(){
 	os.Setenv("SLACK_APP_TOKEN", "xapp-1-")
 
 	
-bot := slacker.NewClient(os.Getenv(("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
+bot := slacker.NewClient(os.Getenv(("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN")))
 
 go printCommandEvents(bot.printCommandEvents())
 
-bot.command("ping")
+bot.command("ping", slacker.CommandDefinition{
+	Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter){
+		response.Reply("pong")
+	}
+})
 
 ctx, cancel := context.WithCancel(context.Background())
 defer cancel()
