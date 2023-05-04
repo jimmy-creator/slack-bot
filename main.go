@@ -25,8 +25,8 @@ func printCommandEvents(analyticsChannel <-chan *slacker.CommandEvent){
 
 func main(){
 	
-	os.Setenv("SLACK_BOT_TOKEN", "xoxb-5196625699367-5211392229715-9H74Tlcmb7jdSjcNrRpipnSF")
-	os.Setenv("SLACK_APP_TOKEN", "xapp-1-A056X0G354G-5223964825729-7739601cfd26188a6f1d8ee8fd798f10366140485b26b35523868fd69005fd56")
+	os.Setenv("SLACK_BOT_TOKEN", "xoxb-")
+	os.Setenv("SLACK_APP_TOKEN", "xapp-1-")
 
 	
 bot := slacker.NewClient(os.Getenv(("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
@@ -35,5 +35,13 @@ go printCommandEvents(bot.printCommandEvents())
 
 bot.command("ping")
 
+ctx, cancel := context.WithCancel(context.Background())
+defer cancel()
+
+err := bot.Listen(ctx)
+if err != nil{
+	log.Fatal(err)
+
+}
 
 }
